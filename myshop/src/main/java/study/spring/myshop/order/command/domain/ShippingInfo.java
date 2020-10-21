@@ -2,14 +2,16 @@ package study.spring.myshop.order.command.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import study.spring.myshop.common.model.Address;
 
-@AllArgsConstructor
 @Getter
 public class ShippingInfo {
-    private String receiverName;
-    private String receiverPhoneNumber;
-    private String shippingAddress1;
-    private String shippingAddress2;
-    private String shippingZipcode;
+    private Receiver receiver;
+    private Address address;
+
+    public ShippingInfo(Receiver receiver, Address address) {
+        this.receiver = receiver;
+        this.address = address;
+    }
 }
 

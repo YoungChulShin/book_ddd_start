@@ -6,16 +6,22 @@ import java.util.List;
 
 public class Order {
 
+    private OrderNo number;
+    private Orderer orderer;
     private OrderState state;
     private ShippingInfo shippingInfo;
     private List<OrderLine> orderLines;
     private Money totalAmounts;
 
-    public Order(List<OrderLine> orderLines, ShippingInfo shippingInfo) {
+    public Order(Orderer orderer,
+                 List<OrderLine> orderLines,
+                 ShippingInfo shippingInfo,
+                 OrderState state) {
+        setOrderer(orderer);
         setOrderLines(orderLines);
         setShippingInfo(shippingInfo);
+        this.state = state;
     }
-
 
     /**
      * 출고 상태로 변경하기
@@ -28,10 +34,7 @@ public class Order {
      * 배송지 정보 변경하기
      */
     public void changeShippingInfo(ShippingInfo newShippingInfo) {
-        if (!isShippingChangeable()) {
-            throw new IllegalStateException("cant change shipping in " + state);
-        }
-
+        verifyNotYetShipped();
         this.shippingInfo = newShippingInfo;
     }
 
@@ -39,7 +42,8 @@ public class Order {
      * 주문 취소하기
      */
     public void cancel() {
-
+        verifyNotYetShipped();
+        this.state = OrderState.CANCELED;
     }
 
     /**
@@ -49,16 +53,21 @@ public class Order {
 
     }
 
-    private boolean isShippingChangeable() {
-        return state == OrderState.PAYMENT_WAITING ||
-                state == OrderState.PREPARING;
+    private void verifyNotYetShipped() {
+        if (state != OrderState.PAYMENT_WAITING && state != OrderState.PREPARING) {
+            throw new IllegalStateException("already shipped");
+        }
+    }
+
+    private void setOrderer(Orderer orderer) {
+        if (orderer == null) throw new IllegalArgumentException("no orderer");
+        this.orderer = orderer;
     }
 
     private void setOrderLines(List<OrderLine> orderLines) {
         verifyAtLeastOneOrMoreOrderLines(orderLines);
         this.orderLines = orderLines;
-        calcualteTotalAmounts();
-
+        calculateTotalAmounts();
     }
 
     private void verifyAtLeastOneOrMoreOrderLines(List<OrderLine> orderLines) {
@@ -67,8 +76,8 @@ public class Order {
         }
     }
 
-    private void calcualteTotalAmounts() {
-        this.totalAmounts = new Money(orderLines.stream().mapToInt(OrderLine::getAmounts).sum());
+    private void calculateTotalAmounts() {
+        this.totalAmounts = new Money(orderLines.stream().mapToInt(x -> x.getAmounts().getValue()).sum());
     }
 
     private void setShippingInfo(ShippingInfo shippingInfo) {
@@ -77,5 +86,24 @@ public class Order {
         }
 
         this.shippingInfo = shippingInfo;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (obj.getClass() != Order.class) return false;
+        if (this.number == null) return false;
+
+        Order other = (Order)obj;
+        return this.number.equals(other.number);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((number == null) ? 0 : number.hashCode());
+        return result;
     }
 }
