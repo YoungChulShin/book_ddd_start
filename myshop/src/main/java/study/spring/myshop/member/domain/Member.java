@@ -18,4 +18,12 @@ public class Member {
         this.id = id;
         this.name = name;
     }
+
+    public void changePassword(String currentPassword, String newPassword) {
+        if (!password.match(currentPassword)) {
+            throw new PasswordNotMatchException();
+        }
+
+        this.password = new Password(newPassword);
+    }
 }

@@ -23,6 +23,8 @@ public class Order {
         this.state = state;
     }
 
+
+
     /**
      * 출고 상태로 변경하기
      */
@@ -35,7 +37,7 @@ public class Order {
      */
     public void changeShippingInfo(ShippingInfo newShippingInfo) {
         verifyNotYetShipped();
-        this.shippingInfo = newShippingInfo;
+        setShippingInfo(newShippingInfo);
     }
 
     /**
