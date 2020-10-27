@@ -23,8 +23,6 @@ public class Order {
         this.state = state;
     }
 
-
-
     /**
      * 출고 상태로 변경하기
      */
