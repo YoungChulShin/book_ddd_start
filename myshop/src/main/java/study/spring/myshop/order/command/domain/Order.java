@@ -1,16 +1,33 @@
 package study.spring.myshop.order.command.domain;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import study.spring.myshop.common.jpa.MoneyConverter;
 import study.spring.myshop.common.model.Money;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "purchase_order")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Access(AccessType.FIELD)   // ID가 Field에 위치하면 Field로, Property에 위치하면 Property로
 public class Order {
 
     private OrderNo number;
+
+    @Embedded
     private Orderer orderer;
+
     private OrderState state;
+
+    @Embedded
     private ShippingInfo shippingInfo;
+
     private List<OrderLine> orderLines;
+
+    @Column(name = "total_amounts")
+    @Convert(converter = MoneyConverter.class)
     private Money totalAmounts;
 
     public Order(Orderer orderer,

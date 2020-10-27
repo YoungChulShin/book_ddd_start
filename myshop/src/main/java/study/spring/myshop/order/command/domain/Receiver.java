@@ -1,15 +1,26 @@
 package study.spring.myshop.order.command.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+@Embeddable
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Receiver {
-    private String name;
-    private String phoneNumber;
 
-    public Receiver(String name, String phoneNumber) {
+    @Column(name = "receiver_name")
+    private String name;
+
+    @Column(name = "receiver_phone")
+    private String phone;
+
+    public Receiver(String name, String phone) {
         this.name = name;
-        this.phoneNumber = phoneNumber;
+        this.phone = phone;
     }
 
     @Override
@@ -21,6 +32,6 @@ public class Receiver {
         Receiver other = (Receiver)obj;
 
         return this.name.equals(other.name) &&
-                this.phoneNumber.equals(other.phoneNumber);
+                this.phone.equals(other.phone);
     }
 }

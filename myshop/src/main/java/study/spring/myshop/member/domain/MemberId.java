@@ -2,12 +2,16 @@ package study.spring.myshop.member.domain;
 
 import lombok.Getter;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
 @Getter
 public class MemberId implements Serializable {
 
+    @Column(name = "member_id")
     private String id;
 
     public MemberId(String id) {
