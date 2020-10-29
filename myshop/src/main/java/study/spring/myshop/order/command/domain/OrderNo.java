@@ -1,12 +1,20 @@
 package study.spring.myshop.order.command.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class OrderNo {
+public class OrderNo implements Serializable {
 
+    @Column(name = "order_number")
     private String number;
 
     public OrderNo(String number) {

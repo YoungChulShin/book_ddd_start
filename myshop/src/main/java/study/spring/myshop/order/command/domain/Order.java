@@ -14,6 +14,7 @@ import java.util.List;
 @Access(AccessType.FIELD)   // ID가 Field에 위치하면 Field로, Property에 위치하면 Property로
 public class Order {
 
+    @EmbeddedId
     private OrderNo number;
 
     @Embedded
@@ -24,6 +25,9 @@ public class Order {
     @Embedded
     private ShippingInfo shippingInfo;
 
+    @ElementCollection
+    @CollectionTable(name = "order_line", joinColumns = @JoinColumn(name = "order_number"))
+    @OrderColumn(name = "line_idx")
     private List<OrderLine> orderLines;
 
     @Column(name = "total_amounts")
