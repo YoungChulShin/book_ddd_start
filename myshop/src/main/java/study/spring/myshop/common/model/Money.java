@@ -23,4 +23,19 @@ public class Money {
     public String toString() {
         return Integer.toString(value);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Money money = (Money) o;
+
+        return value == money.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return value;
+    }
 }

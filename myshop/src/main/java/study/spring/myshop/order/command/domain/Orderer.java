@@ -9,9 +9,8 @@ import javax.persistence.*;
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Orderer {
-
     @Embedded
-    @AttributeOverrides(    // memberId를 OrdererID로 재정의
+    @AttributeOverrides(
             @AttributeOverride(name = "id", column = @Column(name = "orderer_id"))
     )
     private MemberId memberId;
