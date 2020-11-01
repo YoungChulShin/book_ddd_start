@@ -3,7 +3,7 @@ package study.spring.myshop.order.command.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import study.spring.myshop.catalog.domain.product.Product;
+import study.spring.myshop.catalog.domain.product.ProductId;
 import study.spring.myshop.common.jpa.MoneyConverter;
 import study.spring.myshop.common.model.Money;
 
@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class OrderLine {
 
     @Embedded
-    private Product product;
+    private ProductId productId;
 
     @Column(name = "price")
     @Convert(converter = MoneyConverter.class)
@@ -28,8 +28,8 @@ public class OrderLine {
     @Convert(converter = MoneyConverter.class)
     private Money amounts;
 
-    public OrderLine(Product product, Money price, int quantity) {
-        this.product = product;
+    public OrderLine(ProductId productId, Money price, int quantity) {
+        this.productId = productId;
         this.price = price;
         this.quantity = quantity;
         this.amounts = calculateAmounts();

@@ -1,4 +1,4 @@
-package study.spring.myshop.member.domain;
+package study.spring.myshop.catalog.domain.product;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,14 +10,14 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberId implements Serializable {
+@Getter
+public class ProductId implements Serializable {
 
-    @Column(name = "member_id")
+    @Column(name = "product_id")
     private String id;
 
-    public MemberId(String id) {
+    public ProductId(String id) {
         this.id = id;
     }
 
@@ -25,8 +25,8 @@ public class MemberId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MemberId memberId = (MemberId) o;
-        return Objects.equals(id, memberId.id);
+        ProductId productId = (ProductId) o;
+        return Objects.equals(id, productId.id);
     }
 
     @Override

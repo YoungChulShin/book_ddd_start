@@ -1,7 +1,6 @@
 package study.spring.myshop.order.command.domain;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import study.spring.myshop.common.model.Address;
@@ -23,7 +22,6 @@ public class ShippingInfo {
 
     @Column(name = "shipping_message")
     private String message;
-
 
     @Embedded
     private Receiver receiver;
