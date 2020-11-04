@@ -1,5 +1,12 @@
 package study.spring.myshop.member.domain;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Embeddable;
+
+@Embeddable
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Password {
 
     private String value;
