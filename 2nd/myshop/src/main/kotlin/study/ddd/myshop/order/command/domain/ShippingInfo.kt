@@ -1,4 +1,8 @@
 package study.ddd.myshop.order.command.domain
 
-class ShippingInfo {
-}
+import study.ddd.myshop.common.model.Address
+
+data class ShippingInfo(
+    val receiver: Receiver,
+    val address: Address
+)
