@@ -1,6 +1,7 @@
 package study.ddd.myshop.order.command.domain
 
 class Order(
+    val orderer: Orderer,
     orderLines: List<OrderLine>,
     var state: OrderState,
     var shippingInfo: ShippingInfo
@@ -25,20 +26,23 @@ class Order(
     }
 
     private fun calculateTotalAmounts() {
-        this.totalAmounts = orderLines.sumOf { it.amounts }
+        this.totalAmounts = orderLines.sumOf { it.amounts.value }
     }
 
 
     fun changeShippingInfo(shippingInfo: ShippingInfo) {
-        if (isShippingChangeable()) {
-            throw IllegalArgumentException("can't change shipping in $state")
-        }
-
+        verifyYetShipped()
         this.shippingInfo = shippingInfo
     }
 
-    private fun isShippingChangeable(): Boolean {
-        return state == OrderState.PAYMENT_WAITING ||
-                state == OrderState.PREPAIRING
+    fun cancel() {
+        verifyYetShipped()
+        this.state = OrderState.CANCELLED
+    }
+
+    private fun verifyYetShipped() {
+        if (state != OrderState.PAYMENT_WAITING && state != OrderState.PREPAIRING) {
+            throw IllegalArgumentException("already shipped")
+        }
     }
 }
