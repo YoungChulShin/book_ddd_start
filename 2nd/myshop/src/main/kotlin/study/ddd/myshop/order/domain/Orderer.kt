@@ -1,4 +1,10 @@
 package study.ddd.myshop.order.domain
 
-class Orderer {
-}
+import javax.persistence.Column
+import javax.persistence.Embeddable
+
+@Embeddable
+class Orderer (
+    @Column
+    val name: String
+)
