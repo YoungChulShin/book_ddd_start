@@ -1,4 +1,4 @@
-package study.ddd.myshop.order.command.domain
+package study.ddd.myshop.order.domain
 
 class Order(
     val orderer: Orderer,

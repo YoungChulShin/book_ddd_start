@@ -1,4 +1,4 @@
-package study.ddd.myshop.order.command.domain
+package study.ddd.myshop.order.domain
 
 import study.ddd.myshop.common.model.Address
 
