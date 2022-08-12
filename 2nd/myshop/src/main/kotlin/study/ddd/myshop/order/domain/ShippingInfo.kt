@@ -6,6 +6,9 @@ import javax.persistence.Embeddable
 
 @Embeddable
 data class ShippingInfo(
+
+    @Column
     val receiver: Receiver,
+    @Column
     val address: Address
 )

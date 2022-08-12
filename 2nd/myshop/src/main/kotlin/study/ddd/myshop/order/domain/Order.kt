@@ -3,23 +3,35 @@ package study.ddd.myshop.order.domain
 import javax.persistence.*
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 class Order(
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
-
     @Column
+    @AttributeOverride(name = "name", column = Column(name = "orderer_name"))
     val orderer: Orderer,
-//    var orderLines: List<OrderLine> = listOf(),
+
+    @ElementCollection
+    @CollectionTable(
+        name = "order_lines",
+        joinColumns = [JoinColumn(name = "order_id")]
+    )
+    var orderLines: List<OrderLine> = listOf(),
 
     @Column
     var state: OrderState,
 
     @Column
+    @AttributeOverrides(
+        AttributeOverride(name = "receiver.name", column = Column(name = "receiver_name")),
+        AttributeOverride(name = "receiver.phoneNumber", column = Column(name = "receiver_phone_number")),
+        AttributeOverride(name = "address.address1", column = Column(name = "destination_address1")),
+        AttributeOverride(name = "address.address2", column = Column(name = "destination_address2")),
+        AttributeOverride(name = "address.zipCode", column = Column(name = "destination_zip_code")),
+    )
     var shippingInfo: ShippingInfo
 ) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null
 
 //    private var totalAmounts: Int = 0
 
