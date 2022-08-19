@@ -3,8 +3,11 @@ package study.ddd.myshop.order.domain
 import javax.persistence.*
 
 @Entity
-@Table(name = "orders")
+@Table(name = "purchase_order")
 class Order(
+    @EmbeddedId
+    val number: OrderNo,
+
     @Column
     @AttributeOverride(name = "name", column = Column(name = "orderer_name"))
     val orderer: Orderer,
@@ -29,10 +32,6 @@ class Order(
     )
     var shippingInfo: ShippingInfo
 ) {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
-
 //    private var totalAmounts: Int = 0
 
 //    init {
